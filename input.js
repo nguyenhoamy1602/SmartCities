@@ -1,6 +1,6 @@
 module.exports = function(callback) {
-import sensor_artifacts from '../../build/contracts/Sensor.json'
-const Sensor = contract(sensor_artifacts);
+
+var Sensor = artifacts.require("./Sensor.sol");
 var sensor;
 Sensor.deployed().then(function(instance){sensor=instance;});
 setInterval(function () {

@@ -54,8 +54,8 @@ window.App = {
       meta = instance;
       return meta.readSensorData(0);
     }).then(function(value) {
-      var dateRead = value[0];
-      console.log(dateRead);
+      
+      var dateRead = Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', value[0]);
       var valueRead = value[1];
       var date = document.getElementById("date");
       date.innerHTML = dateRead.valueOf();
@@ -65,6 +65,7 @@ window.App = {
       console.log(e);
       self.setStatus("Error getting balance; see log.");
     });
+    return value;
   },
 
   drawGraph: function() {
@@ -88,7 +89,3 @@ window.addEventListener('load', function() {
   App.start();
 });
 
-setInterval(function () {
-                        var x = (new Date()).getTime(), // current time
-                            y = Math.random();
-                    }, 1000);
