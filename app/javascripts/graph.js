@@ -16,20 +16,17 @@ $(document).ready(function () {
                     // set up the updating of the chart each second
                     var series = this.series[0];
                     setInterval(function () {
-                        //App.showData();
-                        var x = (new Date()).getTime(), // current time
-                           y = Math.random();
-                        //var x = $("#date").text();
-                        //var y = $("#measure").text();
-
-                        //console.log(value);
+                        //var x = (new Date()).getTime(), // current time
+                        //  y = Math.random();
+                        var x = parseInt($("#time").text());
+                            y = parseInt($("#measure").text());
                         series.addPoint([x, y], true, true);
                     }, 1000);
                 }
             }
         },
         title: {
-            text: 'Live Emission Data'
+            text: 'Live Emission Data For Sensor at Mars Melbourne Factory'
         },
         xAxis: {
             type: 'datetime',
@@ -37,7 +34,7 @@ $(document).ready(function () {
         },
         yAxis: {
             title: {
-                text: 'Value'
+                text: 'CO2 Emission/ppm'
             },
             plotLines: [{
                 value: 0,

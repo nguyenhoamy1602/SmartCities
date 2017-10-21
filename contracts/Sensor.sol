@@ -37,9 +37,20 @@ contract Sensor {
 	}
 
 	function readSensorData(uint _x) constant returns(uint, uint) {
-		uint lastElement = sensorData.length - 1;
+		uint lastElement = getSize() - 1;
 		return (sensorData[lastElement - _x].time, sensorData[lastElement - _x].value);
 	}
 
+	function getSize() constant returns(uint) {
+		return sensorData.length;
+	}
 
+	function sumNthElement(uint _n) constant returns(uint) {
+		uint sum = 0;
+		uint lastElement = getSize() - 1;
+		for (uint i = 0; i<=_n; i++) {			
+            sum += sensorData[lastElement - i].value;
+        } 
+		return sum;
+	}
 }

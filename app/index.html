@@ -8,16 +8,16 @@
 <body>
   <h1>Emission</h1>
   <h2>Tracking</h2>
-  <h3>You have <span class="black"> <span id="measure"></span> ppm emission on <span id="date"></span> </span></h3>
-
+  <h3>Mars Melbourne has <span class="black"> <span id="measure"></span> ppm emission on <span id="date"></span> </span></h3>
+  <span id="time" style="display: none"></span>
   <div id="container" style="width:100%; height:400px;"></div>
-  <input type="button" value="Refresh Page" onClick="window.location.reload()">
 
   <br>
-  <h1>Choose Date Range</h1>
-  <br><label for="amount">From:</label><input type="text" id="amount" placeholder="DD/MM/YY"></input>
-  <br><label for="receiver">To:</label><input type="text" id="receiver" placeholder="DD/MM/YY"></input>
-  <br><br><button id="send" onclick="App.showData()">Get Graph</button>
+  <h1>Get Emission Data For</h1>
+  <br><label for="day">Day</label><input type="text" id="day" placeholder=""></input>
+  <br><label for="month">Month</label><input type="text" id="month" placeholder=""></input>
+  <br><label for="year">Year</label><input type="text" id="year" placeholder=""></input>
+  <br><br><button id="send" onclick="App.aggregateTheLastNthDay()">Get Measurer</button>
   <br><br>
   <span id="status"></span>
   <br>

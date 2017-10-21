@@ -54,9 +54,11 @@ window.App = {
       meta = instance;
       return meta.readSensorData(0);
     }).then(function(value) {
-      
-      var dateRead = Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', value[0]);
+      var timeRead = value[0];
+      var dateRead = Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', timeRead);
       var valueRead = value[1];
+      var time = document.getElementById("time");
+      time.innerHTML = timeRead.valueOf();
       var date = document.getElementById("date");
       date.innerHTML = dateRead.valueOf();
       var measure = document.getElementById("measure");
@@ -65,13 +67,27 @@ window.App = {
       console.log(e);
       self.setStatus("Error getting balance; see log.");
     });
-    return value;
   },
 
-  drawGraph: function() {
-    var graph = require('./graph');
-    graph.sendData(dateRead, valueRead);
+  aggregateTheLastNthDay: function() {
+    var self = this;
+
+    var day = parseInt(document.getElementById("day").value);
+    var month = parseInt(document.getElementById("month").value);
+    var year = parseInt(document.getElementById("year").value);
+    this.setStatus("Initiating calculation for " + day.toString() + " days " + month.toString() + " months " + year.toString() + " years (please wait)");
+    //var sum=0;
+    var meta;
+    Sensor.deployed().then(function(instance) {
+      meta = instance;
+      return meta.sumNthElement(day + month*30 + year*365);
+    }).then(function(value) {
+      self.setStatus("There are " + value.toString() + " ppm emitted in the last " + day.toString() + " days " + month.toString() + " months " + year.toString() + " years!");
+    })
+
   }
+
+
 };
 
 window.addEventListener('load', function() {
