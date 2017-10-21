@@ -3,13 +3,14 @@ import "../stylesheets/app.css";
 
 // Import libraries we need.
 import { default as Web3} from 'web3';
-import { default as contract } from 'truffle-contract'
+import { default as contract } from 'truffle-contract';
 
 // Import our contract artifacts and turn them into usable abstractions.
 import sensor_artifacts from '../../build/contracts/Sensor.json'
-
+const Highcharts = require('highcharts');
+require('highcharts/modules/boost')(Highcharts);
 // MetaCoin is our usable abstraction, which we'll use through the code below.
-var Sensor = contract(sensor_artifacts);
+const Sensor = contract(sensor_artifacts);
 
 // The following code is simple to show off interacting with your contracts.
 // As your needs grow you will likely need to change its form and structure.
@@ -54,6 +55,7 @@ window.App = {
       return meta.readSensorData(0);
     }).then(function(value) {
       var dateRead = value[0];
+      console.log(dateRead);
       var valueRead = value[1];
       var date = document.getElementById("date");
       date.innerHTML = dateRead.valueOf();
@@ -67,6 +69,7 @@ window.App = {
 
   drawGraph: function() {
     var graph = require('./graph');
+    graph.sendData(dateRead, valueRead);
   }
 };
 
@@ -84,3 +87,8 @@ window.addEventListener('load', function() {
 
   App.start();
 });
+
+setInterval(function () {
+                        var x = (new Date()).getTime(), // current time
+                            y = Math.random();
+                    }, 1000);

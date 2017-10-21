@@ -17,7 +17,7 @@ contract Sensor {
 	}
 
 	struct Reading {
-		string time;
+		uint time;
 		uint value;
 	}
 
@@ -32,11 +32,11 @@ contract Sensor {
 		location = _location;
 	}
 
-	function storeSensorData(string _time, uint _value) {
+	function storeSensorData(uint _time, uint _value) {
 		sensorData.push(Reading(_time, _value));
 	}
 
-	function readSensorData(uint _x) constant returns(string, uint) {
+	function readSensorData(uint _x) constant returns(uint, uint) {
 		uint lastElement = sensorData.length - 1;
 		return (sensorData[lastElement - _x].time, sensorData[lastElement - _x].value);
 	}

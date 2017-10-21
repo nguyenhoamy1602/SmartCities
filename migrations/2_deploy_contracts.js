@@ -10,11 +10,12 @@ module.exports = function (deployer) {
 
     Sensor.deployed().then(function (instance) {
       var sensor = instance;
-      sensor.storeSensorData("1/1/2017", Math.round(Math.random() * 100));
-      sensor.storeSensorData("1/1/2017", Math.round(Math.random() * 100));
-      sensor.storeSensorData("1/1/2017", Math.round(Math.random() * 100));
-      sensor.storeSensorData("1/1/2017", Math.round(Math.random() * 100));
-      sensor.storeSensorData("1/1/2017", Math.round(Math.random() * 100));
+      sensor.storeSensorData((new Date()).getTime(), Math.round(Math.random() * 100));
+      console.log((new Date()).getTime());
+      sensor.storeSensorData((new Date()).getTime(), Math.round(Math.random() * 100));
+      sensor.storeSensorData((new Date()).getTime(), Math.round(Math.random() * 100));
+      sensor.storeSensorData((new Date()).getTime(), Math.round(Math.random() * 100));
+      sensor.storeSensorData((new Date()).getTime(), Math.round(Math.random() * 100));
     });
   });
   };
