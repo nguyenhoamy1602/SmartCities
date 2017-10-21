@@ -23,13 +23,9 @@ window.App = {
 
     // Bootstrap the MetaCoin abstraction for Use.
     Sensor.setProvider(web3.currentProvider);
-    sensors = new Sensor[];
-    for (i=0; i<5; i++) {
-        sensor = new Sensor("factory 1", i);
-        sensors.add(sensor);
-    }
+    
     // Get the initial account balance so it can be displayed.
-    web3.eth.getData(function(err, accs) {
+    web3.eth.getAccounts(function(err, accs) {
       if (err != null) {
         alert("There was an error fetching your sensor data.");
         return;
@@ -40,10 +36,7 @@ window.App = {
         return;
       }
 
-      sensors = accs;
-      sensor = sensors[0];
-
-      self.refreshBalance();
+      self.showData();
     });
   },
 
@@ -52,41 +45,28 @@ window.App = {
     status.innerHTML = message;
   },
 
-  refreshBalance: function() {
+  showData: function() {
     var self = this;
 
     var meta;
-    MetaCoin.deployed().then(function(instance) {
+    Sensor.deployed().then(function(instance) {
       meta = instance;
-      return meta.getBalance.call(account, {from: account});
+      return meta.readSensorData(0);
     }).then(function(value) {
-      var balance_element = document.getElementById("balance");
-      balance_element.innerHTML = value.valueOf();
+      var dateRead = value[0];
+      var valueRead = value[1];
+      var date = document.getElementById("date");
+      date.innerHTML = dateRead.valueOf();
+      var measure = document.getElementById("measure");
+      measure.innerHTML = valueRead.valueOf();
     }).catch(function(e) {
       console.log(e);
       self.setStatus("Error getting balance; see log.");
     });
   },
 
-  sendCoin: function() {
-    var self = this;
-
-    var amount = parseInt(document.getElementById("amount").value);
-    var receiver = document.getElementById("receiver").value;
-
-    this.setStatus("Initiating transaction... (please wait)");
-
-    var meta;
-    MetaCoin.deployed().then(function(instance) {
-      meta = instance;
-      return meta.sendCoin(receiver, amount, {from: account});
-    }).then(function() {
-      self.setStatus("Transaction complete!");
-      self.refreshBalance();
-    }).catch(function(e) {
-      console.log(e);
-      self.setStatus("Error sending coin; see log.");
-    });
+  drawGraph: function() {
+    var graph = require('./graph');
   }
 };
 
